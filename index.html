@@ -1370,9 +1370,9 @@ function fillRange(el){ var p=(el.value-el.min)/(el.max-el.min)*100; el.style.se
   var $=function(id){return document.getElementById('sim-'+id);};
   if(!document.getElementById('sim')) return;
   var ids=['ref','conv','tkt','com','fx'];
-  var S={cons:{ref:3,conv:20,tkt:600000,com:5,fx:5.4},
-         base:{ref:5,conv:25,tkt:800000,com:6,fx:5.4},
-         otim:{ref:8,conv:30,tkt:1000000,com:7,fx:5.4}};
+  var S={cons:{ref:3,conv:20,tkt:600000,com:5,get fx(){return window.CAMBIO_HOJE||5.4}},
+         base:{ref:5,conv:25,tkt:800000,com:6,get fx(){return window.CAMBIO_HOJE||5.4}},
+         otim:{ref:8,conv:30,tkt:1000000,com:7,get fx(){return window.CAMBIO_HOJE||5.4}}};
   function model(v){ var sales=v.ref*v.conv/100; return {sales:sales, adv:sales*v.tkt*v.com/100*ADV, avg:v.tkt*v.com/100*ADV}; }
   function read(){ var v={}; ids.forEach(function(i){ v[i]=parseFloat($(i).value); }); return v; }
   function dec(x){ return x<10 && Math.abs(x-Math.round(x))>.05 ? 1 : 0; }
@@ -1422,5 +1422,33 @@ function fillRange(el){ var p=(el.value-el.min)/(el.max-el.min)*100; el.style.se
 })();
 </script>
 
+<script id="cambio-ao-vivo">
+/* Câmbio do dia (gerado por portal-blue3/tools/sincronizar_parceria.py; não editar à mão) */
+(function () {
+  function fmt(v, c) { return v.toLocaleString('pt-BR', { minimumFractionDigits: c, maximumFractionDigits: c }); }
+  fetch('https://blue3.celebrityglobalrealty.com/api/cambio').then(function (r) { return r.json(); }).then(function (c) {
+    var v = +c.valor; if (!(v > 1)) return;
+    window.CAMBIO_HOJE = Math.round(v * 100) / 100;
+    var quando = c.atualizado_em ? new Date(c.atualizado_em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+    var nota = c.fonte === 'AwesomeAPI' ? 'Cotação do dólar de hoje (compra), ' + quando + ' · AwesomeAPI' : 'Câmbio de referência';
+    ['dl-fx', 'sim-fx'].forEach(function (id) {
+      var el = document.getElementById(id); if (!el) return;
+      el.step = '0.01'; el.value = window.CAMBIO_HOJE.toFixed(2);
+      var n = el.parentNode.querySelector('.cambio-hoje');
+      if (!n) { n = document.createElement('p'); n.className = 'cambio-hoje'; n.style.cssText = 'font-size:11.5px;opacity:.75;margin:6px 0 0'; el.parentNode.appendChild(n); }
+      n.textContent = nota;
+    });
+    var dl = document.getElementById('dl-fx'); if (dl) dl.dispatchEvent(new Event('input'));
+    var cen = document.querySelector('[data-s][aria-pressed="true"]');  /* recalcula mantendo o cenário escolhido */
+    if (cen) cen.click(); else { var sf = document.getElementById('sim-fx'); if (sf) sf.dispatchEvent(new Event('input')); }
+    document.querySelectorAll('span').forEach(function (sp) {  /* exemplo "Em reais, a R$ X ≈ R$ Y" */
+      if (!/^Em reais, a R\$/.test(sp.textContent.trim())) return;
+      sp.textContent = 'Em reais, a R$ ' + fmt(window.CAMBIO_HOJE, 2);
+      var b = sp.nextElementSibling;
+      if (b && typeof ADV === 'number' && typeof brl === 'function') b.textContent = '≈ ' + brl(800000 * 6 / 100 * ADV * window.CAMBIO_HOJE);
+    });
+  }).catch(function () {});
+})();
+</script>
 </body>
 </html>
