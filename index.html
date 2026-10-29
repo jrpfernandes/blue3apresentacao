@@ -596,6 +596,19 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   .dl-wf{padding:6px 14px 10px}
   .dl-wf p{font-size:13px}
 }
+
+/* cover: keep copy inside the navy field, larger signature */
+@media (min-width:861px){
+  #s1 .cover-photo{inset:0 0 0 50%}
+  #s1 .cover-inner{max-width:min(600px, calc(50vw - 150px))}
+  #s1 .lead{max-width:none}
+}
+#s1 .sig{font-size:17px;letter-spacing:.04em;color:var(--ivory);text-shadow:0 2px 12px rgba(0,0,0,.85),0 0 2px rgba(0,0,0,.6)}
+#s1 .sig b{font-size:clamp(30px,2.6vw,40px);margin-bottom:4px;text-shadow:0 2px 14px rgba(0,0,0,.9)}
+@media (max-width:760px){
+  #s1 .sig{font-size:14px}
+  #s1 .sig b{font-size:28px}
+}
 /* ---------- phone layer: only applies to small screens ---------- */
 .sm-mini{display:none}
 @media (hover:none){
