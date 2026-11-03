@@ -288,7 +288,7 @@ svg{display:block}
 .s12>*{min-width:0}
 .s12 .right{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .s12 .right .card:last-child{grid-column:1 / -1}
-.s12 .card .h1.h1-long{font-size:clamp(34px,3.05vw,50px);line-height:1.04;max-width:17ch}.tagline{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
+.s12 .card .tagline{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
 
 /* ---------- S13 closing ---------- */
 #s13{align-items:stretch;padding:0}
@@ -378,6 +378,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
 
+.h1.h1-long{font-size:clamp(34px,3.05vw,50px);line-height:1.04;max-width:17ch}.cover-tag{margin-top:clamp(6px,1vh,12px);font-family:var(--serif);font-style:italic;font-size:clamp(20px,2vw,30px);color:var(--gold);line-height:1.2}
 /* ---------- bio (quem apresenta) ---------- */
 #bio .people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.2vw,32px)}
 #bio .person{display:grid;grid-template-columns:clamp(120px,11vw,168px) minmax(0,1fr);gap:clamp(16px,1.8vw,26px);align-items:start;padding:clamp(20px,2.2vw,30px);border:1px solid var(--navy-line);background:var(--navy-2);position:relative}
@@ -398,7 +399,6 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 #bio .together .ic{color:var(--gold)}
 @media(max-width:1000px){#bio .people{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:520px){#bio .person{grid-template-columns:96px minmax(0,1fr)}#bio .ph .mono{font-size:48px}#bio .nums{flex-wrap:wrap;gap:12px 18px}}
-.tagline{margin-top:clamp(6px,1vh,12px);font-family:var(--serif);font-style:italic;font-size:clamp(20px,2vw,30px);color:var(--gold);line-height:1.2}
 </style>
 <style>
 .panel .icon-badge{color:var(--gold);border-color:var(--gold)}
@@ -792,7 +792,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
       </div>
       <p class="eyebrow rv" style="--d:1">Guia da parceria para assessores</p>
       <h1 class="h1 h1-long rv" style="--d:2">Imóveis nos EUA: diversificação e segurança <em>em dólar</em></h1>
-      <p class="tagline rv" style="--d:3">Mais receita para você.</p>
+      <p class="cover-tag rv" style="--d:3">Mais receita para você.</p>
       <div class="rule rv" style="--d:3"></div>
       <p class="lead rv" style="--d:4">A parceria entre a Blue3 e a Celebrity Global Realty já está em vigor. Este guia mostra por que oferecer imóveis nos EUA, como indicar um cliente e quanto você recebe em cada venda.</p>
     </div>
